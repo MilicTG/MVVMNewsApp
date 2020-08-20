@@ -1,12 +1,15 @@
-package com.androiddevs.mvvmnewsapp
+package com.androiddevs.mvvmnewsapp.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
+//set table name
 @Entity(
     tableName = "articles"
 )
+
+//you mast define a primary key
 data class Article(
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null,

@@ -1,6 +1,6 @@
 package com.androiddevs.mvvmnewsapp.api
 
-import com.androiddevs.mvvmnewsapp.NewsResponse
+import com.androiddevs.mvvmnewsapp.models.NewsResponse
 import com.androiddevs.mvvmnewsapp.util.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
@@ -8,6 +8,7 @@ import retrofit2.http.Query
 
 interface NewsAPI {
 
+    //Retrofit interface for making calls
     @GET("v2/top-headlines")
     suspend fun getBreakingNews(
         @Query("country")

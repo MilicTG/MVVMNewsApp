@@ -9,10 +9,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitInstance {
     companion object {
 
+        //initiate only once
+        //logging is only for log
+        //by lazy you create singleton
+        //only one instance of retrofit is allowed
         private val retrofit by lazy {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
+            //create OkHttpClient
             val client = OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .build()
