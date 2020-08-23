@@ -17,11 +17,6 @@ class NewsViewModel(
     val newsRepository: NewsRepository
 ) : ViewModel() {
 
-    //start wit init
-    init {
-        getBreakingNews("us")
-    }
-
     //create LiveDataObject
     //wrap response object in resource
     //fragments subscribe to LiveData
@@ -29,6 +24,11 @@ class NewsViewModel(
 
     //manage paging in viewModel
     var breakingNewsPage = 1
+
+    //start wit init
+    init {
+        getBreakingNews("us")
+    }
 
     //the function from repo is suspend fun
     //don't call suspend fun in fragment
