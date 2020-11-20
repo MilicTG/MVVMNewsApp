@@ -14,6 +14,7 @@ import com.androiddevs.mvvmnewsapp.models.Article
     version = 1
 )
 //define type converters
+//database class must be abstract
 @TypeConverters(Converters::class)
 abstract class ArticleDatabase : RoomDatabase() {
 

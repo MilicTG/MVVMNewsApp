@@ -8,6 +8,7 @@ import retrofit2.http.Query
 
 interface NewsAPI {
 
+    //Define single request
     //Retrofit interface for making calls
     @GET("v2/top-headlines")
     suspend fun getBreakingNews(

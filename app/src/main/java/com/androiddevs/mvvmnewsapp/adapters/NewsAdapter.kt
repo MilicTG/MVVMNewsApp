@@ -28,11 +28,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
         }
 
     }
-
     //async list differ
     //takes two list and compares them and check the differences
     //executes async
-val differ = AsyncListDiffer(this, differCallback)
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
@@ -67,7 +66,7 @@ val differ = AsyncListDiffer(this, differCallback)
     private var onItemClickListener: ((Article) -> Unit)? = null
 
     //gets called from outside
-    fun setOnItemClickListener(listener: (Article) -> Unit){
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
 
