@@ -21,9 +21,11 @@ class NewsViewModel(
     //wrap response object in resource
     //fragments subscribe to LiveData
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
 
     //manage paging in viewModel
     var breakingNewsPage = 1
+    var searchNewsPage = 1
 
     //start wit init
     init {
@@ -42,8 +44,23 @@ class NewsViewModel(
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
 
+    fun searchNews(searchQuery: String) = viewModelScope.launch {
+        searchNews.postValue(Resource.Loading())
+        val response = newsRepository.searchNews(searchQuery, searchNewsPage)
+        searchNews.postValue(handleSearchNewsResponse(response))
+    }
+
     //here you omit if is response successful or error
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)

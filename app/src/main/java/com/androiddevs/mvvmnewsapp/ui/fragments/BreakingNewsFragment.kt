@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapters.NewsAdapter
@@ -25,9 +26,18 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         viewModel = (activity as NewsActivity).viewModel
         setupRecyclerView()
 
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_breakingNewsFragment_to_articleFragment, bundle
+            )
+        }
+
         //subscribe to live data
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer {response ->
-            when(response){
+        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     //it gives the adapter the list of articles
@@ -48,15 +58,15 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         })
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         paginationProgressBar.visibility = View.INVISIBLE
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         paginationProgressBar.visibility = View.VISIBLE
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
         rvBreakingNews.apply {
             adapter = newsAdapter
