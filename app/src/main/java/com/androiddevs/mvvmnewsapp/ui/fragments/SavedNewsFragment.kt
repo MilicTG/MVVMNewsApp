@@ -12,6 +12,7 @@ import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.adapters.NewsAdapter
 import com.androiddevs.mvvmnewsapp.ui.NewsActivity
 import com.androiddevs.mvvmnewsapp.ui.NewsViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_saved_news.*
 import kotlinx.android.synthetic.main.fragment_search_news.*
 
@@ -52,11 +53,23 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                TODO("Not yet implemented")
-            }
+                val position = viewHolder.adapterPosition
+                //get article at position
+                val article = newsAdapter.differ.currentList[position]
+                viewModel.deleteArticle(article)
 
+                Snackbar.make(view, "Article deleted", Snackbar.LENGTH_LONG).apply {
+                    setAction("Undo") {
+                        viewModel.saveArticle(article)
+                    }
+                    show()
+                }
+            }
         }
 
+        ItemTouchHelper(itemTouchHelperCallback).apply {
+            attachToRecyclerView(rvSavedNews)
+        }
     }
 
     private fun setupRecyclerView() {
